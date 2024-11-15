@@ -1,0 +1,15 @@
+.notification_custom{
+    width:350px;
+    position: absolute; 
+    inset: 35px -15px auto auto;
+    transform: translate3d(-330px, 5px, 0px);
+    
+}
+
+.toast{
+    border: unset;
+    margin-top: 10px;
+    box-shadow: unset;
+}
+
+

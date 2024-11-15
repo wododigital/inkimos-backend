@@ -1,0 +1,6 @@
+backend/media
+backend/node_modules
+
+dashboard/build
+dashboard/build.zip
+dashboard/node_modules

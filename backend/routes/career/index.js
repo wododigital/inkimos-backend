@@ -5,6 +5,7 @@ const router =express.Router();
 const multer = require('multer');
 const db = require('../../connection');
 const { authenticateToken, getCurrentDateTimeString }=require('../../config');
+const { resolve } = require("url");
 
 // Configure Multer storage settings
 const storage =multer.memoryStorage();
@@ -87,26 +88,42 @@ router.post( '/career',upload.fields([{ name: 'resume' }]), async (req, res) => 
 });
 
 
-router.post('/carees-list', authenticateToken , async (req, res) => {
+router.post('/carees-list', authenticateToken, async (req, res) => {
     try {
-        const { date } =req.body;
-        const getQuery='SELECT * FROM careers WHERE DATE_FORMAT(created_on, "%Y-%m") = ? ORDER BY created_on DESC';
-        const values=[date]; 
-        const results=await new Promise((resolve, reject)=>{
-            db.query(getQuery, values, (err, results)=>{
-                if(err){
+        const { date } = req.body;
+        const getQuery = `
+            SELECT 
+            careers.full_name, 
+            careers.contact_num, 
+            careers.email, 
+            careers.url, 
+            careers.file_attachment, 
+            careers.status, 
+            careers.created_on, 
+            jobs.job_title as role 
+            FROM careers 
+                LEFT JOIN jobs 
+            ON careers.role = jobs.job_code 
+            WHERE DATE_FORMAT(careers.created_on, "%Y-%m") = ? 
+                ORDER BY careers.created_on DESC
+        `;
+        const values = [date];
+        const results = await new Promise((resolve, reject) => {
+            db.query(getQuery, values, (err, results) => {
+                if (err) {
                     return reject(err);
                 }
                 resolve(results);
-            })
+            });
         });
 
-
+        // Directly send the results as the response
         res.status(200).send(results);
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        res.status(500).send({ error: 'Internal Server Error' });
     }
-})
+});
 
 router.get('/download/:id/:file', authenticateToken, (req, res) => {
     const filePath = path.join('media', 'careers', req.params.id, req.params.file);

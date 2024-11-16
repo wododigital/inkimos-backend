@@ -27,7 +27,7 @@
 }
 
 .dt-input:focus{
-    border: 1px solid #df4646;
+    border: 1px solid #22dac4;
 }
 
 .dt-search label{
@@ -39,7 +39,7 @@
 }
 
 .dt-paging .dt-paging-button.current, .dt-paging-button.current:focus, .dt-paging-button.current:hover {
-    background: #df4646d4 !important;
+    background: #22dac4 !important;
     color: #ffffff !important;
 
     padding: 5px 13px !important;
@@ -161,7 +161,7 @@
 }
 
 .dt-paging-button:hover{
-    background: #df4646d4;
+    background: #22dac4;
     color: #fff;
     /* border-radius: 50%; */
 }
@@ -198,12 +198,27 @@
 }
 
 .css-t3ipsp-control{
-	border-color: #df4d52 !important;
-	box-shadow: 0 0 0 1px #df4d52 !important;
+	border-color: #22dac4 !important;
+	box-shadow: 0 0 0 1px #22dac4 !important;
 }
 
 .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
-    border: 1px solid #df4d52 !important;
-    box-shadow: #df4d52, 0 0;
+    border: 1px solid #22dac4 !important;
+    box-shadow: #22dac4, 0 0;
     outline: none;
 }
+
+.ck-content ul {
+    list-style-type: disc; 
+    padding-left: 1.5em;
+}
+  
+.ck-content ol {
+    list-style-type: decimal;
+    padding-left: 1.5em;
+}
+  
+.ck-content li {
+    margin-bottom: 0.5em;
+}
+

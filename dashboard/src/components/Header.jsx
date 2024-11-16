@@ -1,6 +1,6 @@
 
 import '../index.css'
-import { Home, LogOut, Contact, Users} from "lucide-react";
+import { Home, LogOut, Contact, Users, BriefcaseBusiness} from "lucide-react";
 import { SidebarItem } from "./sidebar/SidebarItem";
 import Sidebar from "./sidebar/Sidebar";
 
@@ -12,9 +12,7 @@ function Header(){
                 text="Dashboard"
                 id="dashboard"
             />
-           
             
-
             <SidebarItem
                 icon={<Contact size={20} />}
                 text="Inquires"
@@ -27,7 +25,11 @@ function Header(){
                 id="careers"
             />
 
-          
+            <SidebarItem
+                icon={<BriefcaseBusiness size={20} />}
+                text="Jobs"
+                id="jobs"
+            />
 
             
             <hr className="my-3" />

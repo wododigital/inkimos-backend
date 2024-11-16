@@ -10,10 +10,8 @@ function App() {
     
       <Router>
         <Routes>
-          {/* The login page route */}
           <Route path="/logout" element={<Logout/>} />
           <Route path="/login" element={<Login />} />
-          {/* All other routes */}
           <Route path="/*" element={<AuthProvider><ProtectedRoute><AppContent /></ProtectedRoute></AuthProvider>} />
         </Routes>
       </Router>

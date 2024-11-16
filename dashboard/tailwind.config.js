@@ -7,7 +7,6 @@
         extend: {
           colors: {
             black: '#2c304d',
-            red: '#D71818',
             lightGrey: '#D4D4D4',
             WhiteGrey: '#FFFFFF33',
             darkGrey: '#3D3D3D',
@@ -19,7 +18,6 @@
             noto: ['"Noto Sans"', 'sans-serif'],
           },
           backgroundColor:{
-            red: '#df4646d4',
             blue: '#0055FF',
             green: '#22dac4'
           },

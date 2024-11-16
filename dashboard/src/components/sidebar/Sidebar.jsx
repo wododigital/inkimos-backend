@@ -61,7 +61,7 @@ const Sidebar = ({ children }) => {
           value={{ expanded, activeItem, setActiveItem: handleSetActiveItem }}
          
         >
-          <ul className="flex-1 px-3 mt-6"  onMouseEnter={() => setExpanded(true)}>{children}</ul>
+          <ul className="flex-1 px-3 mt-6" >{children}</ul>
         </SidebarContext.Provider>
         
       </nav>

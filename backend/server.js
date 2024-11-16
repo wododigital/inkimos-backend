@@ -3,7 +3,7 @@ const express=require('express');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const { url } =require('./config');
+const { url, live } =require('./config');
 
 const app=express();
 app.use(cookieParser());
@@ -23,11 +23,13 @@ const auth=require('./routes/auth/index');
 const apis=require('./routes/api/index');
 const contact_us=require('./routes/contact_us/index');
 const career=require('./routes/career/index');
+const jobs=require('./routes/jobs/index');
 
 app.use('/',auth);
 app.use('/api/',contact_us);
 app.use('/api/',apis);
 app.use('/api/',career);
+app.use('/api/',jobs);
 
 
 app.use('/media', express.static(path.join(__dirname, 'media')));

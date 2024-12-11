@@ -3,7 +3,25 @@ const router =express.Router();
 const db = require('../../connection');
 const multer = require('multer');
 const upload = multer();
-const { authenticateToken, getCurrentDateTimeString }=require('../../config');
+const { authenticateToken, getCurrentDateTimeString, getInquiryTemplate }=require('../../config');
+const { sendEmail } = require('../../mailer');
+
+const sendInquiryEmail = async (name, email, phone, service, message, to, cc) => {
+    const template = getInquiryTemplate({
+      customerName: name,
+      customerEmail: email,
+      customerPhone: phone,
+      serviceRequested: service,
+      customerMessage: message
+    });
+  
+    await sendEmail(
+      to, // to
+      template.subject,
+      template.html,
+      cc // cc
+    );
+};
 
 router.post('/contact-us', upload.none(), async (req, res) => {
     try {
@@ -22,6 +40,7 @@ router.post('/contact-us', upload.none(), async (req, res) => {
         if(!results){
             res.status(200).send({ status : "error"});
         }
+        await sendInquiryEmail(name, email, phone, industry, details, 'kpai@inkimos.com',["suhas.ashok@inkimos.com", "shyam.singh@inkimos.com", "karan.kumar@inkimos.com", "annappa.poojary@inkimos.com"]);
         res.status(200).send({ status : "success", message : 'Contact form submitted successfully! '});
     } catch (error) {
         console.error(error);
@@ -48,7 +67,6 @@ router.post('/inquries', authenticateToken, async (req, res) => {
         console.log(error);
     }
 });
-
 
 router.put('/contact/status', authenticateToken, async (req, res) => {
     try {

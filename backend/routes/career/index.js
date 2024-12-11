@@ -4,8 +4,25 @@ const path = require('path');
 const router =express.Router();
 const multer = require('multer');
 const db = require('../../connection');
-const { authenticateToken, getCurrentDateTimeString }=require('../../config');
-const { resolve } = require("url");
+const { authenticateToken, getCurrentDateTimeString, getCareerTemplate, media_url }=require('../../config');
+const { sendEmail } = require('../../mailer');
+
+const sendInquiryEmail = async (name, email, position, resumeName, resumeLink, message, to) => {
+    const template = getCareerTemplate({
+      applicantName: name,
+      applicantEmail: email,
+      appliedPosition: position,
+      resumeName: resumeName,
+      resumeLink: resumeLink,
+      details: message
+    }); 
+  
+    await sendEmail(
+      to, // to
+      template.subject,
+      template.html
+    );
+};
 
 // Configure Multer storage settings
 const storage =multer.memoryStorage();
@@ -27,9 +44,9 @@ const upload = multer({
 
 router.post( '/career',upload.fields([{ name: 'resume' }]), async (req, res) => {
     try {
-        const { name, phone, email, role, url} =req.body;
-        const insertQuery='INSERT INTO careers(full_name, contact_num, email, url, role, file_attachment, status, created_on) VALUES( ?, ?, ?, ?, ?, ?, ?, ?)';
-        const insertValues=[name, phone, email, url, role, '', 'pending', getCurrentDateTimeString()];
+        const { name, phone, email, role, url, details} =req.body;
+        const insertQuery='INSERT INTO careers(full_name, contact_num, email, url, role, file_attachment, details, status, created_on) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const insertValues=[name, phone, email, url, role, '', details, 'pending', getCurrentDateTimeString()];
         const results=await new Promise((resolve, reject)=>{
             db.query(insertQuery, insertValues,(err, results)=>{
                 if(err){
@@ -72,19 +89,31 @@ router.post( '/career',upload.fields([{ name: 'resume' }]), async (req, res) => 
             const updateQuery = 'UPDATE careers SET file_attachment = ? WHERE id = ?';
             const updateValues = [files['resume'][0].originalname, insertId];
 
-            db.query(updateQuery, updateValues, (dbErr) => {
+            db.query(updateQuery, updateValues, async (dbErr) => {
                 if (dbErr) {
                     return res.status(500).send({ status: 'error', message: 'Error saving file data to the database' });
                 }
+
+                const getRoleName = await new Promise((resolve, reject)=>{
+                    db.query('SELECT job_title FROM jobs WHERE job_code = ?', [role], (err, results)=>{
+                        resolve(results[0].job_title);
+                    });
+                });
+
+
+                const resumeLink = `${media_url}/api/download/${insertId}/${files['resume'][0].originalname}`;
+                await sendInquiryEmail(name, email, getRoleName, files['resume'][0].originalname, resumeLink, details, 'hr@inkimos.com');
                 res.status(200).send({ status: 'success', message: 'Data added successfully' });
             });
-
         }
-
-
     } catch (error) {
         console.log(error);
     }
+});
+
+router.get('/download/:id/:file', (req, res) => {
+    const filePath = path.join('media', 'careers', req.params.id, req.params.file);
+    res.download(filePath); 
 });
 
 
@@ -100,6 +129,8 @@ router.post('/carees-list', authenticateToken, async (req, res) => {
             careers.file_attachment, 
             careers.status, 
             careers.created_on, 
+            careers.id, 
+            careers.details, 
             jobs.job_title as role 
             FROM careers 
                 LEFT JOIN jobs 

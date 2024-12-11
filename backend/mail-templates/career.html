@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Career Application</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6;background: #22DAC4; color: #333; margin: 0 auto; padding: 20px;">
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; max-width: 600px; margin: auto;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://inkimos.com/assets/Logo-01-CRC_uhWJ.png" alt="Inkimos Logo" style="max-width: 150px;">
+        </div>
+        
+        <h2 style="color: #2c3e50; text-align: center; margin-bottom:10px;">New Career Application</h2>
+        
+        <p style="margin-bottom: 10px;">Hi Team,</p>
+        
+        <p>A new job application has been submitted on our website.</p>
+        
+        <div style="background-color: rgba(255, 255, 255, 0.26); padding: 10px; border-radius: 5px;">
+            <h3 style="color: #000000; margin-bottom: 15px;">Application Details:</h3>
+            
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; width: 150px;">Name:</td>
+                    <td style="padding: 8px 0;">${applicantName}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold;">Email:</td>
+                    <td style="padding: 8px 0;">${applicantEmail}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold;">Position:</td>
+                    <td style="padding: 8px 0;">${appliedPosition}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold;">Resume:</td>
+                    <td style="padding: 8px 0;">
+                        <div style="display: flex; align-items: center;">
+                            <!-- <span style="margin-right: 10px;">${resumeName}</span> -->
+                            <a href="${resumeLink}" 
+                               style="display: inline-block;
+                                      padding: 8px 15px;
+                                      background-color: #22DAC4;
+                                      color: white;
+                                      text-decoration: none;
+                                      border-radius: 5px;
+                                      font-weight: 500;
+                                      transition: background-color 0.2s ease-in-out;"
+                               download>
+                                Download Resume
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <p>Please review the application and take necessary action.</p>
+        
+        <div style="margin-top: 20px;">
+            <p>Best regards,</p>
+            <p style="font-weight: bold; color: #2c3e50;">Inkimos</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #ffffff;">
+        <p>© ${year} Inkimos. All rights reserved.</p>
+    </div>
+</body>
+</html>

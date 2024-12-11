@@ -8,13 +8,7 @@ const { jwt_secret, getCurrentDateTimeString, authenticateToken }=require('../..
 
 const SECRET_KEY = jwt_secret;
 
-router.post('/login',
-    [
-        // Input validation
-        body('email').isEmail().withMessage('Please enter a valid email'),
-        body('password').notEmpty().withMessage('Password is required'),
-    ]
-,async(req,res)=>{
+router.post('/login',async(req,res)=>{
     try {
         // Check for validation errors
         const errors = validationResult(req);
@@ -44,6 +38,14 @@ router.post('/login',
             return res.status(200).json({ status: 'error', message: 'Invalid credentials' });
         }
 
+        const updateQuery='UPDATE admin_users SET  last_logged_in= ? WHERE email = ?';
+        await new Promise((resolve, reject) => {
+            db.query(updateQuery, [getCurrentDateTimeString(), email], (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
+
         const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '10h' });
 
         res.cookie('token', token, {
@@ -64,26 +66,26 @@ router.post('/login',
 });
 
 
-router.get('/add-user',async(req,res)=>{
-    try {
-        const name="Wodo";
-        const email='hello@wodo.digital';
-        const password='Wodo@123';
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const insertQuery='INSERT INTO admin_users(name, email, password, created_on, last_logged_in) VALUES(?, ?, ?, ?, ?)';
-        const values=[name, email, hashedPassword, getCurrentDateTimeString(), ''];
-        await new Promise((resolve,reject)=>{
-            db.query(insertQuery,values,(err)=>{
-                if (err) return reject(err);
-                resolve();
-            })
-        })
-        res.status(201).send({ status: 'success', message: 'User added successfully' });
+// router.get('/add-user',async(req,res)=>{
+//     try {
+//         const name="Inkimos";
+//         const email='inkimsteam';
+//         const password='!2aeD@14#S';
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         const insertQuery='INSERT INTO admin_users(name, email, password, created_on, last_logged_in) VALUES(?, ?, ?, ?, ?)';
+//         const values=[name, email, hashedPassword, getCurrentDateTimeString(), ''];
+//         await new Promise((resolve,reject)=>{
+//             db.query(insertQuery,values,(err)=>{
+//                 if (err) return reject(err);
+//                 resolve();
+//             })
+//         })
+//         res.status(201).send({ status: 'success', message: 'User added successfully' });
         
-    } catch (error) {
-        console.error(error);
-    }
-})
+//     } catch (error) {
+//         console.error(error);
+//     }
+// })
 
 router.get('/get-user',async(req,res)=>{
     try {
@@ -101,8 +103,6 @@ router.get('/get-user',async(req,res)=>{
         console.error(error);
     }
 })
-
-
 
 // Check if the user is authenticated by verifying the token in the cookie
 router.get('/auth/check', (req, res) => {

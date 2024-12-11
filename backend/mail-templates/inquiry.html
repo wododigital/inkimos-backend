@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Service Inquiry</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6;background: #22DAC4; color: #333; margin: 0 auto; padding: 20px;">
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; max-width: 600px; margin: auto;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <!-- <img src="http://localhost:3004/media/assets/inkimos-logo.png" alt="Inkimos Logo" style="max-width: 150px;"> -->
+            <img src="https://inkimos.com/assets/Logo-01-CRC_uhWJ.png" alt="Inkimos Logo" style="max-width: 150px;">
+        </div>
+        
+        <h2 style="color: #2c3e50; text-align: center; margin-bottom:10px;">New Service Inquiry</h2>
+        
+        <p style="margin-bottom: 10px;">Hi Team,</p>
+        
+        <p>A new service inquiry has been submitted on our website.</p>
+        
+        <div style="background-color: rgba(255, 255, 255, 0.26); padding: 10px; border-radius: 5px;">
+            <h3 style="color: #000000; margin-bottom: 15px;">Inquiry Details:</h3>
+            
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; width: 150px;">Name:</td>
+                    <td style="padding: 8px 0;">${customerName}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold;">Email:</td>
+                    <td style="padding: 8px 0;">${customerEmail}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold;">Phone:</td>
+                    <td style="padding: 8px 0;">${customerPhone}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold;">Service Interest:</td>
+                    <td style="padding: 8px 0;">${serviceRequested}</td>
+                </tr>
+         
+            </table>
+            <div style="margin-top: 8px;">
+                <p style="font-weight: bold;">Message:</p>
+                <p style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">${customerMessage}</p>
+            </div>
+        
+        </div>
+        
+        <p>Please review and respond promptly. Let me know if any assistance is required.</p>
+        
+        <div style="margin-top: 20px;">
+            <p>Best regards,</p>
+            <p style="font-weight: bold; color: #2c3e50;">Inkimos</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #ffffff;">
+        <p>© ${year} Inkimos. All rights reserved.</p>
+    </div>
+</body>
+</html>

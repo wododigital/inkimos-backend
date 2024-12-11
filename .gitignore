@@ -1,6 +1,9 @@
 backend/media
 backend/node_modules
+backend/config.js
+backend/config
 
 dashboard/build
 dashboard/build.zip
 dashboard/node_modules
+

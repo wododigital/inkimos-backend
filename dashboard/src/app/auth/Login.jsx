@@ -16,13 +16,7 @@ const Login =()=>{
         let errors = {};
 
         if (!formData.email || formData.email.trim()==="") {
-          errors.email = 'Email is required';
-        }else {
-            // Regex for validating email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(formData.email)) {
-                errors.email = 'Invalid email format';
-            }
+          errors.email = 'User name is required';
         }
 
         if (!formData.password || formData.password.trim()==="") {
@@ -35,15 +29,16 @@ const Login =()=>{
     const formHandler=(e)=>{
         e.preventDefault();
         const validationErrors = validate(); 
+         // console.log(formData);
         if (Object.keys(validationErrors).length === 0) {
-            // console.log(formData);
+          
             axios.post(`${config.baseURL}/login`,formData,{
                 withCredentials: true  
             })
             .then((res)=>{
                 if(res.data.status==='success'){
-                    console.log('login success');
-                    navigate('/');
+                    //console.log('login success');
+                    navigate('/inquires');
                 }else{
                     setErrors((prevData)=>({
                         ...prevData,
@@ -70,17 +65,16 @@ const Login =()=>{
             <div className="h-full px-6 py-12 lg:px-8 mt-20">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img className="mx-auto w-32" src={logo} alt="Your Company" />
-                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in</h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="space-y-6" onSubmit={formHandler}>
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                            <label className="block text-sm font-medium leading-6 text-gray-900">User name</label>
                             <div className="mt-2">
-                                <input name="email" type="email"  value={formData.email} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6 focus:outline-none" />
+                                <input name="email" type="text"  value={formData.email} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6 focus:outline-none" />
                             </div>
-                            {errors.email && <p className="text-red">{errors.email}</p>}
+                            {errors && <p className="text-red-600  text-sm">{errors.email}</p>}
                         </div>
 
                         <div>
@@ -93,7 +87,7 @@ const Login =()=>{
                             <div className="mt-2">
                                 <input name="password" type="password" value={formData.password} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6 focus:outline-none" />
                             </div>
-                            {errors.password && <p className="text-red">{errors.password}</p>}
+                            {errors && <p className="text-red-600 text-sm">{errors.password}</p>}
                         </div>
 
                         <div>

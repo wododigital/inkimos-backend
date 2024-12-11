@@ -7,11 +7,11 @@ import Sidebar from "./sidebar/Sidebar";
 function Header(){
     return(
         <Sidebar>
-            <SidebarItem
+            {/* <SidebarItem
                 icon={<Home size={20} />}
                 text="Dashboard"
                 id="dashboard"
-            />
+            /> */}
             
             <SidebarItem
                 icon={<Contact size={20} />}

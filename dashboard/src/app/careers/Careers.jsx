@@ -207,7 +207,11 @@ const Careers = React.memo(() => {
                               </div>
                               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt className="text-sm font-medium leading-6 text-gray-900">Linkin Url</dt>
-                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><a href={formdata && formdata.url}  target="_blank" rel="noopener noreferrer"><Link/></a></dd>
+                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{formdata && formdata.url ? (<a href={formdata && formdata.url}  target="_blank" rel="noopener noreferrer"><Link/></a>) : ''}</dd>
+                              </div>
+                              <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leading-6 text-gray-900">Details</dt>
+                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{formdata && formdata.details}</dd>
                               </div>
                               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt className="text-sm font-medium leading-6 text-gray-900">Contact</dt>

@@ -11,7 +11,7 @@ function AppRoutes(){
     return(
       <>
         <Routes>
-          <Route path="/" element={<Dashboard/>} />
+          {/* <Route path="/" element={<Dashboard/>} /> */}
           <Route path="/inquires" element={<Contact/>} />
           <Route path="/careers" element={<Careers/>} />
           <Route path="/jobs" element={<Jobs/>} />

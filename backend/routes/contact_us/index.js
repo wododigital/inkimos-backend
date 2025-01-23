@@ -1,10 +1,9 @@
 const express=require("express");
 const router =express.Router();
 const db = require('../../connection');
-const multer = require('multer');
-const upload = multer();
-const { authenticateToken, getCurrentDateTimeString, getInquiryTemplate }=require('../../config');
-const { sendEmail } = require('../../mailer');
+
+const { authenticateToken, getCurrentDateTimeString, getInquiryTemplate, getFeedbackTemplate }=require('../../config');
+const { sendEmail, sendEmail_2 } = require('../../mailer');
 
 const sendInquiryEmail = async (name, email, phone, service, message, to, cc) => {
     const template = getInquiryTemplate({
@@ -23,7 +22,20 @@ const sendInquiryEmail = async (name, email, phone, service, message, to, cc) =>
     );
 };
 
-router.post('/contact-us', upload.none(), async (req, res) => {
+const sendFeedbackEmail = async (name, to, cc) => {
+    const template = getFeedbackTemplate({
+      userName: name,
+    });
+
+    await sendEmail_2(
+        to,
+        template.subject,
+        template.html,
+        cc
+    );
+}
+
+router.post('/contact-us', async (req, res) => {
     try {
         const { name, phone, email, industry, details } =req.body;
 
@@ -41,7 +53,9 @@ router.post('/contact-us', upload.none(), async (req, res) => {
             res.status(200).send({ status : "error"});
         }
         await sendInquiryEmail(name, email, phone, industry, details, 'kpai@inkimos.com',["suhas.ashok@inkimos.com", "shyam.singh@inkimos.com", "karan.kumar@inkimos.com", "annappa.poojary@inkimos.com"]);
-        res.status(200).send({ status : "success", message : 'Contact form submitted successfully! '});
+        await sendFeedbackEmail(name, email,["annappa.poojary@inkimos.com", "kpai@inkimos.com", "suhas.ashok@inkimos.com", "karan.kumar@inkimos.com"]);
+  
+        res.status(200).send({ status : "success", message : 'Contact form submitted successfully!'});
     } catch (error) {
         console.error(error);
         res.status(500).send({ status : "error", message : error })

@@ -10,7 +10,10 @@ const media_url = 'http://localhost:3004';
 // const email_user = "invengersolutions@gmail.com";
 // const email_pass = "NewValley45$";  
 const email_user = "invengersolutions@gmail.com";
-const email_pass = "lxsj rghc nluq rreh";  
+const email_pass = "lxsj rghc nluq rreh"; 
+
+const email_user_2 = "info.inkimos@gmail.com";
+const email_pass_2 = "drni arhy gkdy lpxm";
 
 
 const jwt = require('jsonwebtoken');
@@ -99,6 +102,28 @@ const getCareerTemplate = (careerData) => {
     };
 }   
 
+const getFeedbackTemplate = (feedbackData) => {
+    const {
+        userName
+    } = feedbackData;
+
+    const fs = require('fs');
+    const path = require('path');
+    let template = fs.readFileSync(
+      path.join(__dirname, './mail-templates/feedback.html'),
+      'utf8'
+    );
+
+    template = template
+      .replace('${userName}', userName || 'N/A')
+      .replace('${year}', new Date().getFullYear());
+
+    return {
+        subject: "Thank You for Your Enquiry",
+        html: template
+    };
+}
+
 
 module.exports = {
     host,
@@ -114,5 +139,8 @@ module.exports = {
     email_pass,
     getInquiryTemplate,
     getCareerTemplate,
-    media_url
+    media_url,
+    email_user_2,
+    email_pass_2,
+    getFeedbackTemplate
 };

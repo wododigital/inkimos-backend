@@ -145,7 +145,7 @@ const Careers = React.memo(() => {
       <div className="p-4 max-w-full mx-auto mt-12 font-noto">
         <div className="flex justify-between mb-4">
           <p className='text-2xl font-bold text-black'>Careers</p>
-          <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green focus:outline-none  sm:text-sm sm:leading-6" />
+          <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none  sm:text-sm sm:leading-6" />
         </div>
         <div className="overflow-x-auto table-responsive ">
           <table id="projectsTable" ref={tableRef} className="display cell-border compact hover order-column row-border stripe w-full text-left table table-striped">
@@ -226,7 +226,7 @@ const Careers = React.memo(() => {
                                     value={formdata?.status || ''}
                                     name="status"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green focus:outline-none focus:border-0 sm:max-w-xs sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none focus:border-0 sm:max-w-xs sm:text-sm sm:leading-6"
                                     onChange={handleChange}
                                   >
                                     {formdata?.status === '' ? (
@@ -256,7 +256,7 @@ const Careers = React.memo(() => {
                                         </div>
                                       </div>
                                       <div className="ml-4 flex-shrink-0">
-                                        <a href={`${config.baseURL}/api/download/${formdata && formdata.id}/${formdata && formdata.file_attachment}`} className="font-medium text-green" download={formdata?.file_attachment}>Download</a>
+                                        <a href={`${config.baseURL}/api/download/${formdata && formdata.id}/${formdata && formdata.file_attachment}`} className="font-medium text-igreen" download={formdata?.file_attachment}>Download</a>
                                       </div>
                                     </li>
                                   </ul>
@@ -266,7 +266,7 @@ const Careers = React.memo(() => {
                           </div>
                           <button
                             type="submit"
-                            className="w-full justify-center rounded-md bg-green px-3 py-2 text-sm font-semibold text-white shadow-sm "
+                            className="w-full justify-center rounded-md bg-igreen px-3 py-2 text-sm font-semibold text-white shadow-sm "
                           >
                             Save
                           </button>

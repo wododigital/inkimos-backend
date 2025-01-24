@@ -1,15 +1,18 @@
 const express=require("express");
 const router =express.Router();
 const db = require('../../connection');
+const multer = require('multer');
+const upload = multer();
 
 const { authenticateToken, getCurrentDateTimeString, getInquiryTemplate, getFeedbackTemplate }=require('../../config');
 const { sendEmail, sendEmail_2 } = require('../../mailer');
 
-const sendInquiryEmail = async (name, email, phone, service, message, to, cc) => {
+const sendInquiryEmail = async (name, email, companyName, phone, service, message, to, cc) => {
     const template = getInquiryTemplate({
       customerName: name,
       customerEmail: email,
       customerPhone: phone,
+      companyName: companyName,
       serviceRequested: service,
       customerMessage: message
     });
@@ -35,12 +38,12 @@ const sendFeedbackEmail = async (name, to, cc) => {
     );
 }
 
-router.post('/contact-us', async (req, res) => {
+router.post('/contact-us', upload.none(), async (req, res) => {
     try {
-        const { name, phone, email, industry, details } =req.body;
+        const { name, phone, email, companyName,  industry, details } =req.body;
 
-        const insertQuery='INSERT INTO contact_us(name, contact_num, email, industry, request_details, status, created_on) VALUES ( ?, ?, ?, ?, ?, ?, ?)';
-        const values =[ name, phone, email, industry, details, 'pending', getCurrentDateTimeString()];
+        const insertQuery='INSERT INTO contact_us(name, contact_num, email, company_name, industry, request_details, status, created_on) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values =[ name, phone, email, companyName, industry, details, 'pending', getCurrentDateTimeString()];
         const results = await new Promise((resolve, reject)=>{
             db.query( insertQuery, values, (err, results)=>{
                 if(err){
@@ -52,8 +55,9 @@ router.post('/contact-us', async (req, res) => {
         if(!results){
             res.status(200).send({ status : "error"});
         }
-        await sendInquiryEmail(name, email, phone, industry, details, 'kpai@inkimos.com',["suhas.ashok@inkimos.com", "shyam.singh@inkimos.com", "karan.kumar@inkimos.com", "annappa.poojary@inkimos.com"]);
-        await sendFeedbackEmail(name, email,["annappa.poojary@inkimos.com", "kpai@inkimos.com", "suhas.ashok@inkimos.com", "karan.kumar@inkimos.com"]);
+        await sendInquiryEmail(name, email, companyName, phone, industry, details, 'suhas.ashok@inkimos.com',["shyam.singh@inkimos.com", "karan.kumar@inkimos.com"]);
+        await sendFeedbackEmail(name, email, ["suhas.ashok@inkimos.com", "karan.kumar@inkimos.com"]);
+        //await sendFeedbackEmail(name, email,["chiruchary1@gmail.com", "karan.kumar@inkimos.com"]);
   
         res.status(200).send({ status : "success", message : 'Contact form submitted successfully!'});
     } catch (error) {

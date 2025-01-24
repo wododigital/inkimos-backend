@@ -11,15 +11,15 @@
             WhiteGrey: '#FFFFFF33',
             darkGrey: '#3D3D3D',
             grey: '#F2F2F2',
-            blue: '#0055FF',
-            green: '#22dac4'
+            iblue: '#0055FF',
+            igreen: '#22dac4',
           },
-          fontFamily: {
-            noto: ['"Noto Sans"', 'sans-serif'],
-          },
+          // fontFamily: {
+          //   noto: ['"Noto Sans"', 'sans-serif'],
+          // },
           backgroundColor:{
-            blue: '#0055FF',
-            green: '#22dac4'
+            iblue: '#0055FF',
+            igreen: '#22dac4',
           },
         },
       },

@@ -72,7 +72,7 @@ const Login =()=>{
                         <div>
                             <label className="block text-sm font-medium leading-6 text-gray-900">User name</label>
                             <div className="mt-2">
-                                <input name="email" type="text"  value={formData.email} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6 focus:outline-none" />
+                                <input name="email" type="text"  value={formData.email} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen sm:text-sm sm:leading-6 focus:outline-none" />
                             </div>
                             {errors && <p className="text-red-600  text-sm">{errors.email}</p>}
                         </div>
@@ -85,13 +85,13 @@ const Login =()=>{
                                 </div> */}
                             </div>
                             <div className="mt-2">
-                                <input name="password" type="password" value={formData.password} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6 focus:outline-none" />
+                                <input name="password" type="password" value={formData.password} onChange={inputHandler} className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen sm:text-sm sm:leading-6 focus:outline-none" />
                             </div>
                             {errors && <p className="text-red-600 text-sm">{errors.password}</p>}
                         </div>
 
                         <div>
-                            <button type="submit" className="flex w-full justify-center rounded-md bg-green px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">Sign in</button>
+                            <button type="submit" className="flex w-full justify-center rounded-md bg-igreen px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">Sign in</button>
                         </div>
                     </form>
                 </div>

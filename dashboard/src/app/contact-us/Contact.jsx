@@ -71,6 +71,10 @@ const Contact = React.memo(() => {
                         data: 'email'
                     },
                     {
+                        title: "Company Name",
+                        data: "company_name"
+                    },
+                    {
                         title: "Contact",
                         data: "contact_num"
                     },
@@ -90,7 +94,15 @@ const Contact = React.memo(() => {
                         title: "Status",
                         data: 'status',
                         render: function (data, type, row) {
-                            return data;
+                            if(data === 'converted'){
+                                return "<span class='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset'>Converted</span>";
+                            }else if(data === 'contacted'){
+                                return "<span class='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset'>Contacted</span>";
+                            }else if(data === 'pending'){
+                                    return "<span class='inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset'>Pending</span>";
+                            }else if(data === 'junk'){
+                                return "<span class='inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-pink-700/10 ring-inset'>Junk</span>";
+                            }
                         }
                     }
 
@@ -137,7 +149,7 @@ const Contact = React.memo(() => {
             <div className="p-4 max-w-full mx-auto mt-12 font-noto">
                 <div className="flex justify-between mb-4">
                     <p className='text-2xl font-bold text-black'>Inquires</p>
-                    <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green focus:outline-none  sm:text-sm sm:leading-6" />
+                    <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none  sm:text-sm sm:leading-6" />
                 </div>
                 <div className="overflow-x-auto table-responsive ">
                     <table id="projectsTable" ref={tableRef} className="display cell-border compact hover order-column row-border stripe w-full text-left table table-striped">
@@ -146,6 +158,7 @@ const Contact = React.memo(() => {
                                 <th className='w-10'>S.No</th>
                                 <th className='w-20'>Name </th>
                                 <th className='w-20'>Email</th>
+                                <th className='w-20'>Company Name</th>
                                 <th className='w-20'>Industry</th>
                                 <th className='w-24'>Country</th>
                                 {/* <th className='w-20'>State</th> */}
@@ -199,6 +212,10 @@ const Contact = React.memo(() => {
                                                                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{formdata && formdata.email}</dd>
                                                             </div>
                                                             <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                                                <dt className="text-sm font-medium leading-6 text-gray-900">Company Name</dt>
+                                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{formdata && formdata.company_name}</dd>
+                                                            </div>
+                                                            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Contact</dt>
                                                                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{formdata && formdata.contact_num}</dd>
                                                             </div>
@@ -215,7 +232,7 @@ const Contact = React.memo(() => {
                                                                         value={formdata?.status || ''}
                                                                         name="status"
                                                                         required
-                                                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-green focus:outline-none focus:border-0 sm:max-w-xs sm:text-sm sm:leading-6"
+                                                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none focus:border-0 sm:max-w-xs sm:text-sm sm:leading-6"
                                                                         onChange={handleChange}
                                                                     >
                                                                         {formdata?.status === '' ? (
@@ -233,7 +250,7 @@ const Contact = React.memo(() => {
                                                     </div>
                                                     <button
                                                         type="submit"
-                                                        className="w-full justify-center rounded-md bg-green px-3 py-2 text-sm font-semibold text-white shadow-sm "
+                                                        className="w-full justify-center rounded-md bg-igreen px-3 py-2 text-sm font-semibold text-white shadow-sm "
                                                     >
                                                         Save
                                                     </button>

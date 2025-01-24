@@ -103,8 +103,8 @@ const Jobs = () => {
                 <div className="flex justify-between mb-4">
                     <p className='text-2xl font-bold text-black'>Jobs</p>
                     <div className='flex'>
-                        <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green focus:outline-none  sm:text-sm sm:leading-6" />
-                        <Link to='/add-job'  className='btn bg-green rounded-md py-2 px-5 ms-4 text-white'>Add New Job</Link>
+                        <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none  sm:text-sm sm:leading-6" />
+                        <Link to='/add-job'  className='btn bg-igreen rounded-md py-2 px-5 ms-4 text-white'>Add New Job</Link>
                     </div>
                 </div>
                 <div className="overflow-x-auto table-responsive ">

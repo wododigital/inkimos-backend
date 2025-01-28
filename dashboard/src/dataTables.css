@@ -222,3 +222,6 @@
     margin-bottom: 0.5em;
 }
 
+.dt-paging-button.first, .dt-paging-button.last{
+    display: none;
+}

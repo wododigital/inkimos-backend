@@ -18,7 +18,19 @@ const Careers = React.memo(() => {
   const [formdata, setFormData] = useState();
   const [refresh, setRefresh] = useState(false);
   const tableRef = useRef(null);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(() => {
+    const storedDate = localStorage.getItem('careers_date');
+    if (storedDate) {
+      return storedDate;
+    } else {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const newDate = `${year}-${month}`;
+      localStorage.setItem('careers_date', newDate);
+      return newDate;
+    }
+  });
 
   const fetchData = async () => {
     try {
@@ -32,13 +44,6 @@ const Careers = React.memo(() => {
       console.error("Error fetching data:", error);
     }
   };
-
-  useEffect(() => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    setDate(`${year}-${month}`);
-  }, [])
 
   useEffect(() => {
     fetchData();
@@ -165,12 +170,23 @@ const Careers = React.memo(() => {
     }
   }
 
+  const handleDateChange = (e) => {
+    const newDate = e.target.value;
+    setDate(newDate);
+    localStorage.setItem('careers_date', newDate);
+  };
+
   return (
     <>
       <div className="p-4 max-w-full mx-auto mt-12 font-noto">
         <div className="flex justify-between mb-4">
           <p className='text-2xl font-bold text-black'>Careers</p>
-          <input type="month" onChange={(e) => setDate(e.target.value)} value={date} className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none  sm:text-sm sm:leading-6" />
+          <input
+            type="month"
+            onChange={handleDateChange}
+            value={date}
+            className="block rounded-md border-0 py-1.5 w-36 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-igreen focus:outline-none sm:text-sm sm:leading-6"
+          />
         </div>
         <div className="overflow-x-auto table-responsive ">
           <table id="projectsTable" ref={tableRef} className="display cell-border compact hover order-column row-border stripe w-full text-left table table-striped">

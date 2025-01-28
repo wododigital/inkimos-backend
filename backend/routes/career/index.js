@@ -178,7 +178,38 @@ router.put('/career/status', authenticateToken, async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-})
+});
 
+router.post('/career/delete', authenticateToken, async (req, res) => {
+    try {
+        const { id } =req.body;
+        const getQuery='SELECT file_attachment FROM careers WHERE id = ?';
+        const values=[id];
+        const results=await new Promise((resolve, reject)=>{
+            db.query(getQuery, values, (err, results)=>{
+                if(err){
+                    return reject(err);
+                }
+                resolve(results);
+            })
+        });
+        const file_attachment=results[0].file_attachment;
+        const filePath = path.join('media', 'careers', String(id), file_attachment);
+        await fs.unlink(filePath);
+
+        const deleteQuery='DELETE FROM careers WHERE id = ?';
+        const results2=await new Promise((resolve, reject)=>{
+            db.query(deleteQuery, values, (err, results)=>{
+                if(err){
+                    return reject(err);
+                }
+                resolve(results);
+            })
+        })
+        res.status(200).send({status : "success", message : "Career deleted successfully;"});
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 module.exports=router;

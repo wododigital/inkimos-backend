@@ -8,8 +8,11 @@ import pdfIcon from '../../assets/PDF_icon.svg.png'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import close from '../../assets/cancel.svg';
 import { Link } from 'lucide-react'
+import trash from '../../assets/trash.svg';
+import { toast } from 'react-toastify';
 
 const Careers = React.memo(() => {
+  const notify = (message) => toast.error(message);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const [formdata, setFormData] = useState();
@@ -85,8 +88,16 @@ const Careers = React.memo(() => {
             title: "Status",
             data: 'status',
             render: function (data, type, row) {
-              return data;
-            }
+              if(data === 'follow-up'){
+                  return "<span class='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset'>Follow up</span>";
+              }else if(data === 'closed'){
+                  return "<span class='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset'>Closed</span>";
+              }else if(data === 'pending'){
+                      return "<span class='inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset'>Pending</span>";
+              }else if(data === 'rejected'){
+                  return "<span class='inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-pink-700/10 ring-inset'>Rejected</span>";
+              }
+          }
           }
 
 
@@ -140,6 +151,20 @@ const Careers = React.memo(() => {
       .catch((err) => console.log(err));
   }
 
+  const deleteHandler = async () => {
+    const response = await axios.post(`${config.baseURL}/api/career/delete`, {
+      id: formdata.id
+    }, {
+      withCredentials: true
+    });
+    if(response.data.status === 'success'){
+      setOpen(false);
+      setRefresh(!refresh);
+    }else{
+      notify('Something went wrong try again later');
+    }
+  }
+
   return (
     <>
       <div className="p-4 max-w-full mx-auto mt-12 font-noto">
@@ -181,7 +206,9 @@ const Careers = React.memo(() => {
                     Applicant Information
                   </DialogTitle>
                   <div className="flex align-middle justify-end ">
+                    <img className="hover:cursor-pointer mr-4" onClick={deleteHandler} src={trash} alt="trash-img" />
                     <img className="hover:cursor-pointer" onClick={() => setOpen(false)} src={close} alt="close-img" />
+                    
                   </div>
                 </div>
 

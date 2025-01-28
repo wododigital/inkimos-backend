@@ -105,4 +105,24 @@ router.put('/contact/status', authenticateToken, async (req, res) => {
     }
 })
 
+router.post('/contact/delete', authenticateToken, async (req, res) => {
+    try {
+        const { id } =req.body;
+        const deleteQuery='DELETE FROM contact_us WHERE id = ?';
+        const values=[id];
+        //console.log(id);
+        const results=await new Promise((resolve, reject)=>{
+            db.query(deleteQuery, values, (err, results)=>{
+                if(err){
+                    return reject(err);
+                }
+                resolve(results);
+            })
+        })
+        res.status(200).send({status : "success", message : "Contact deleted successfully;"});
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 module.exports=router;

@@ -5,9 +5,11 @@ import $ from 'jquery';
 import 'datatables.net';
 import config from "../../config";
 import close from '../../assets/cancel.svg';
+import trash from '../../assets/trash.svg';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-
+import { toast } from 'react-toastify';
 const Contact = React.memo(() => {
+    const notify = (message) => toast.error(message);
     const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     const [formdata, setFormData] = useState();
@@ -144,6 +146,21 @@ const Contact = React.memo(() => {
             .catch((err) => console.log(err));
     }
 
+    const deleteHandler = async () => {
+        const response = await axios.post(`${config.baseURL}/api/contact/delete`, {
+            id: formdata.id
+        }, {
+            withCredentials: true
+        });
+        if(response.data.status === 'success'){
+            setOpen(false);
+            setRefresh(!refresh);
+        }else{
+            console.log('error');
+            notify('Something went wrong try again later');
+        }
+    }
+
     return (
         <>
             <div className="p-4 max-w-full mx-auto mt-12 font-noto">
@@ -187,6 +204,7 @@ const Contact = React.memo(() => {
                                         Inquery Details
                                     </DialogTitle>
                                     <div className="flex align-middle justify-end ">
+                                         <img className="hover:cursor-pointer mr-4" onClick={deleteHandler} src={trash} alt="trash-img" />
                                         <img className="hover:cursor-pointer" onClick={() => setOpen(false)} src={close} alt="close-img" />
                                     </div>
                                 </div>
